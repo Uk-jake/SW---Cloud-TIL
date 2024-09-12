@@ -12,7 +12,30 @@ def callByValue(arg1: int) -> None:
     arg1 = 20
     print(f"arg1 is now {arg1}")
 
-x = 5
-print(f"before callByValue() x is {x}")
-callByValue(x)
-print(f"after callByValue() x is {x}")
+def orderParameter(a:int, b:int) -> None:
+    print(f"a is {a}, b is {b}")
+    
+def tupleReturn() -> tuple:
+    return 100, 200
+    
+# 매개변수가 여러 개인 경우 1개로 대입해서 분할한 후 사용
+def personalInfo(name:str, age:int, gender:bool) -> None :
+    print(f"name : {name}")
+    print(f"age : {age}")
+    print(f"gender : {gender}")
+
+personalInfo("Jake", 25, 1)
+personalInfo(*["Jack", 23, 1])
+personalInfo(*{"name":"Adam", "age": 34, "gender" : 1})
+personalInfo(**{"name":"Adam", "age": 34, "gender" : 1})
+
+#orderParameter(b=10, a=20)
+#print(tupleReturn())
+
+# 매개변수의 설명을 추가할 수 있음.
+def annotationFunction(score : 'int >= 0') -> None :
+    print(f"점수 : {score}")
+
+annotationFunction.__doc__ = "설명란 추가"
+    
+help(annotationFunction)
