@@ -1,0 +1,19 @@
+version: '2'  # Docker Compose 파일의 버전 (여기서는 버전 2 사용)
+
+services:  # 서비스 정의 시작
+  zookeeper:  # Zookeeper 서비스 정의
+    image: wurstmeister/zookeeper  # Zookeeper 서비스에 사용할 Docker 이미지
+    container_name: zookeeper  # 컨테이너의 이름을 "zookeeper"로 설정
+    ports:  # 컨테이너의 포트를 호스트와 매핑
+      - "2181:2181"  # 호스트의 2181 포트를 컨테이너의 2181 포트로 연결 (Zookeeper의 기본 포트)
+
+  kafka:  # Kafka 서비스 정의
+    image: wurstmeister/kafka:2.12-2.5.0  # Kafka 서비스에 사용할 Docker 이미지 (버전 2.12-2.5.0)
+    container_name: kafka  # 컨테이너의 이름을 "kafka"로 설정
+    ports:  # 컨테이너의 포트를 호스트와 매핑
+      - "9092:9092"  # 호스트의 9092 포트를 컨테이너의 9092 포트로 연결 (Kafka의 기본 포트)
+    environment:  # Kafka 서비스의 환경 변수 설정
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1  # Kafka가 외부에서 접근할 때 사용할 호스트 이름 (여기서는 localhost)
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181  # Kafka가 연결할 Zookeeper 주소 및 포트 (여기서는 zookeeper 서비스의 2181 포트)
+    volumes:  # 호스트와 컨테이너 간의 파일 공유 설정
+      - /var/run/docker.sock:/var/run/docker.sock  # Kafka 컨테이너가 호스트의 Docker 소켓에 접근할 수 있도록 설정 (Kafka 브로커가 컨테이너 내부에서 동작할 수 있도록)
