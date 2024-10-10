@@ -1,4 +1,21 @@
+server:
+  port: 8080
+
 spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/springcqrs
+    username: root
+    password: 110499
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
